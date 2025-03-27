@@ -16,9 +16,16 @@ class User:
         return response
 
     @staticmethod
-    def get_users():
+    def get_users(page=1, per_page=10):
         supabase = get_supabase()
-        response = supabase.table("person").select("*").execute()
+        offset = (page - 1) * per_page
+
+        response = (
+            supabase.table("person")
+            .select("*")
+            .range(offset, offset + per_page - 1)
+            .execute()
+        )
         return response.data
 
     @staticmethod
