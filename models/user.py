@@ -13,7 +13,7 @@ class User:
             "data_nascimento": data_nascimento,
         }
         response = supabase.table("person").insert(data).execute()
-        return response
+        return response.data
 
     @staticmethod
     def get_users(page=1, per_page=10):
@@ -38,4 +38,4 @@ class User:
     def delete_user(user_id):
         supabase = get_supabase()
         response = supabase.table("person").delete().eq("id", user_id).execute()
-        return response
+        return response.data

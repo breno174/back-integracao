@@ -1,7 +1,6 @@
 from flask import request, jsonify
 from models.user import User
 
-
 def create_user():
     data = request.json
     first_name = data.get("first_name")

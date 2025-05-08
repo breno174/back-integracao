@@ -15,7 +15,7 @@ class File:
             "file_path": UPLOAD_FOLDER,
         }
         response = supabase.table("files").insert(data).execute()
-        return response
+        return response.data
 
     @staticmethod
     def get_files_by_user(user_id):
@@ -33,4 +33,4 @@ class File:
     def delete_file(file_id):
         supabase = get_supabase()
         response = supabase.table("files").delete().eq("id", file_id).execute()
-        return response
+        return response.data
