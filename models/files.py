@@ -5,20 +5,20 @@ UPLOAD_FOLDER = "storage/files"
 
 class File:
     @staticmethod
-    def upload_file(user_id, file_name, file_type, zip_id=None):
+    def upload_file(user_id, file_name, file_type, file_path, zip_id=None):
         supabase = get_supabase()
         data = {
             "user_id": user_id,
             "file_name": file_name,
             "file_type": file_type,
             "zip_id": zip_id,
-            "file_path": UPLOAD_FOLDER,
+            "file_path": file_path,
         }
         response = supabase.table("files").insert(data).execute()
         return response.data
 
     @staticmethod
-    def get_files_by_user(user_id):
+    def get_files_db_by_user(user_id):
         supabase = get_supabase()
         response = supabase.table("files").select("*").eq("user_id", user_id).execute()
         return response.data

@@ -3,9 +3,9 @@ from models.zip import ZipFile
 from services.zip_service import create_zip_for_user
 
 
-def create_zip():
+def create_zip_controller():
     data = request.json
-    response = ZipFile.create_zip(data["user_id"], data["zip_name"])
+    response = ZipFile.create_zip_in_db(data["user_id"], data["zip_name"])
     return jsonify(response), 201
 
 

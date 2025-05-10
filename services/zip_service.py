@@ -1,19 +1,6 @@
 import os
 import zipfile
-from models import get_supabase
-
-
-def get_user_files(user_id):
-    """
-    Busca todos os arquivos vinculados a um usuário no Supabase.
-    """
-    supabase = get_supabase()
-    response = supabase.table("files").select("*").eq("user_id", user_id).execute()
-
-    if not response.data:
-        return []
-
-    return response.data
+from services.file_service import get_user_files
 
 
 def create_zip_for_user(user_id, output_dir="zips"):
