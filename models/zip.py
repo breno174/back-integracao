@@ -16,7 +16,7 @@ class ZipFile:
         return response.data
 
     @staticmethod
-    def delete_zip(zip_id):
+    def delete_zip(user_id):
         supabase = get_supabase()
-        response = supabase.table("zip").delete().eq("id", zip_id).execute()
+        response = supabase.table("zip").delete().eq("user_id", user_id).execute()
         return response.data

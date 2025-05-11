@@ -5,7 +5,8 @@ from models.zip import ZipFile
 from models import get_supabase
 
 # Defina o diretório onde os arquivos serão armazenados no servidor
-UPLOAD_FOLDER = "storage/files"
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "..", "storage", "files")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Cria a pasta se ela não existir
 
 
@@ -20,10 +21,14 @@ def save_file(user_id, file):
     user_id = int(user_id)
 
     # Gera o caminho completo onde o arquivo será salvo
-    file_path = os.path.join(UPLOAD_FOLDER, f"user_{user_id}_{filename}")
+    file_path = os.path.abspath(
+        os.path.join(UPLOAD_FOLDER, f"user_{user_id}_{filename}")
+    )
 
     # Salva o arquivo fisicamente no servidor
     file.save(file_path)
+
+    # Vínculo com ZIP
     zip_file = ZipFile.get_zips_by_user(user_id)
     if zip_file:
         user_id_zip = zip_file[0]["user_id"]

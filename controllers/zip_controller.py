@@ -1,6 +1,12 @@
 from flask import request, jsonify
 from models.zip import ZipFile
-from services.zip_service import create_zip_for_user
+from services.zip_service import (
+    create_zip_for_user,
+    delete_zip_service,
+    get_existing_zip_for_user,
+)
+import os
+from flask import send_file
 
 
 def create_zip_controller():
@@ -14,9 +20,18 @@ def get_zips_by_user(user_id):
     return jsonify(zips)
 
 
-def delete_zip(zip_id):
-    response = ZipFile.delete_zip(zip_id)
-    return jsonify(response)
+def delete_zip(user_id):
+    response = delete_zip_service(user_id)
+    if response == False:
+        return (
+            jsonify(
+                {
+                    "error": "Arquivo ZIP não encontrado ou zip não salvo no banco de dados."
+                }
+            ),
+            404,
+        )
+    return jsonify(response), 201
 
 
 def generate_zip(user_id):
@@ -29,3 +44,20 @@ def generate_zip(user_id):
         return jsonify({"error": "Nenhum arquivo encontrado para o usuário"}), 404
 
     return jsonify({"zip_path": zip_path}), 200
+
+
+def download_zip(user_id):
+    try:
+        zip_path = get_existing_zip_for_user(user_id)
+
+        if not zip_path:
+            return (
+                jsonify({"error": "Arquivo ZIP não encontrado para este usuário"}),
+                404,
+            )
+
+        return send_file(
+            zip_path, as_attachment=True, download_name=os.path.basename(zip_path)
+        )
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

@@ -9,5 +9,6 @@ from .zip_controller import (
     delete_zip,
     generate_zip,
     get_zips_by_user,
+    download_zip,
 )
 from .user_controller import create_user, delete_user, get_users
