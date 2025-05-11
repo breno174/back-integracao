@@ -103,3 +103,35 @@ Este README descreve como utilizar as rotas da aplicação. A URL base para toda
 ### 8. **GET** `/files/download-zip`
 
 - **Descrição:** O download do arquivo ZIP é feito via browser.
+
+## TESTE
+
+- **SEQUENCIA DE PASSOS**
+
+#1 Criar um usuário.
+
+> Rota: **POST** /users
+
+#2 Puxar todos os usuário do banco.
+
+> Rota: **GET** /users
+
+#3 Fazer um upload de pelo menos 3 arquivos.
+
+> Rota: **POST** /files
+
+#4 Puxar todos os registros de arquivos do usuário no banco.
+
+> Rota: **GET** /users
+
+#5 Criar uma linha de arquivo zip no banco de dados.
+
+> Rota: **POST** /zips
+
+#6 Gerar um arquivo .zip de todos os arquivos do usuário na máquina.
+
+> Rota: **GET** /zips/generate/:user_id
+
+#7 Entrar via browser e fazer o donwload do arquivo zip gerado.
+
+> Rota: **GET** /zips/generate/:user_id
