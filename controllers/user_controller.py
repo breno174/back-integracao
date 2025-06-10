@@ -36,13 +36,13 @@ def delete_user(user_id):
 def login_user():
     data = request.json
     email = data.get("email")
-    password = data.get("password")
+    ip_address = data.get("ip_address")
 
-    if not email or not password:
+    if not email or not ip_address:
         return jsonify({"error": "Email e senha são obrigatórios"}), 400
 
     try:
-        user = User.login(email, password)
+        user = User.login(email, ip_address)
         if user:
             return jsonify({"message": "Login bem-sucedido", "user": user}), 200
         else:

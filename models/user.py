@@ -41,13 +41,13 @@ class User:
         return response.data
     
     @staticmethod
-    def login(email, password):
+    def login(email, ip_address):
         supabase = get_supabase()
         response = (
             supabase.table("person")
             .select("*")
             .eq("email", email)
-            .eq("password", password)
+            .eq("ip_address", ip_address)
             .execute()
         )
         if response.data:
