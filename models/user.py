@@ -39,3 +39,17 @@ class User:
         supabase = get_supabase()
         response = supabase.table("person").delete().eq("id", user_id).execute()
         return response.data
+    
+    @staticmethod
+    def login(email, password):
+        supabase = get_supabase()
+        response = (
+            supabase.table("person")
+            .select("*")
+            .eq("email", email)
+            .eq("password", password)
+            .execute()
+        )
+        if response.data:
+            return response.data[0]
+        return None
