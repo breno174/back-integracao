@@ -5,7 +5,7 @@ import routes
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, origins=["*"], allow_headers=["*"])  # Allow all origins for CORS
     configs.init_app(app)
     routes.init_app(app)
 
