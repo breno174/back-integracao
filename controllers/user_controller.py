@@ -32,3 +32,20 @@ def get_users():
 def delete_user(user_id):
     response = User.delete_user(user_id)
     return jsonify(response)
+
+def login_user():
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
+
+    if not email or not password:
+        return jsonify({"error": "Email e senha são obrigatórios"}), 400
+
+    try:
+        user = User.login(email, password)
+        if user:
+            return jsonify({"message": "Login bem-sucedido", "user": user}), 200
+        else:
+            return jsonify({"error": "Email ou senha incorretos"}), 401
+    except Exception as e:
+        return jsonify({"error": f"Erro ao fazer login: {str(e)}"}), 500
